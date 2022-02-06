@@ -9,29 +9,73 @@
 <div>
 
 <div class="content">
+
     <h1>Task Master</h1>
+
+    <form action="/" method="POST">
+        <p>
+        <label for="date">Date:</label>
+        <input type="date" name="date" value="{{ today.date() }}">
+        </p>
+        <p>
+        <label for="username">Username:</label>
+        <input type="text" name="username"  value="mgreco">
+        </p>
+        <p>
+        <label for="issue">Issue id:</label>
+        <input type="number" name="issue" value=1701>
+        </p>
+        <p>
+        <label for="spent">Spent:</label>
+        <input type="number" name="spent" value=8>
+        </p>
+        <p>
+        <label for="burnt">Burnt:</label>
+        <input type="number" name="burnt" value=8>
+        </p>
+        <p>
+        <label for="description">Description:</label>
+        <input type="text" name="description" value="Description here...">
+        </p>
+        <p>
+        <input type="submit" value="Add Task">
+        </p>
+    </form>
+
+    {% if tasks | length < 1 %}
+        <h2>There are not tasks. Create one!</h2>
+
+    {% else %}
 
     <table>
         <tr>
-            <th>Task</th>
-            <th>Added</th>
+            <th>Date</th>
+            <th>Issue</th>
+            <th>User Name</th>
+            <th>Spent</th>
+            <th>Burnt</th>
+            <th>Description</th>
             <th>Actions</th>
         </tr>
 
+        {% for task in tasks %}
+
         <tr>
-            <td></td>
-            <td></td>
-            <td><a href="">Delete</a>
-                <br>
-                <a href="">Update</a></td>
+            <td> {{ task.date }} </td>
+            <td> {{ task.issue }} </td>
+            <td> {{ task.username }} </td>
+            <td> {{ task.spent }} </td>
+            <td> {{ task.burnt }} </td>
+            <td> {{ task.description }} </td>
+
+            <td><a href="/delete/{{ task.id }}">Delete</a>&nbsp;<a href="/update/{{ task.id }}">Update</a>
+            </td>
         </tr>
+
+        {% endfor %}
+
     </table>
-
-    <form action="/" method="POST">
-        <input type="text" name="content" id="content">
-        <input type="submit" value="Add Task">
-    </form>
-
+    {% endif %}
 </div>
 
 {% endblock %}
