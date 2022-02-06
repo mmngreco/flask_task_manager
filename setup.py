@@ -28,5 +28,9 @@ setup(
     package_dir={'': '.'},
     packages=find_packages(where='src'),
     python_requires='>=3.5, <4',
-    install_requires=[],
+    install_requires=[
+        "Flask",
+        "Flask-SQLAlchemy",
+        "gunicorn",
+    ],
 )
