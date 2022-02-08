@@ -10,7 +10,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
-class Todo(db.Model):
+class Tasks(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     completed = db.Column(db.Integer, default=0)
@@ -40,7 +40,7 @@ def form2task(form, task):
 @app.route('/', methods=['POST', 'GET'])
 def index(db=db):
     if request.method == "POST":
-        new_task = form2task(request.form, Todo())
+        new_task = form2task(request.form, Tasks())
 
         try:
             db.session.add(new_task)
@@ -50,7 +50,7 @@ def index(db=db):
             return "There was an error adding your task."
 
     else:
-        tasks = Todo.query.order_by(Todo.date).all()
+        tasks = Tasks.query.order_by(Tasks.date).all()
         today = datetime.utcnow()
         return render_template('index.html', tasks=tasks, today=today)
 
@@ -58,7 +58,7 @@ def index(db=db):
 @app.route("/delete/<int:id>")
 def delete(id, db=db):
 
-    task_to_delete = Todo.query.get_or_404(id)
+    task_to_delete = Tasks.query.get_or_404(id)
 
     try:
         db.session.delete(task_to_delete)
@@ -70,7 +70,7 @@ def delete(id, db=db):
 
 @app.route("/update/<int:id>", methods=['GET', 'POST'])
 def update(id, db=db):
-    task = Todo.query.get_or_404(id)
+    task = Tasks.query.get_or_404(id)
 
     if request.method == "POST":
         task = form2task(request.form, task)

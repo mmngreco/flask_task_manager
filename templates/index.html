@@ -46,31 +46,32 @@
         <h2>There are not tasks. Create one!</h2>
 
     {% else %}
+        <table>
+            <tr>
+                <th>id</th>
+                <th>Date</th>
+                <th>Issue</th>
+                <th>User Name</th>
+                <th>Spent</th>
+                <th>Burnt</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
 
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Issue</th>
-            <th>User Name</th>
-            <th>Spent</th>
-            <th>Burnt</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
+            {% for task in tasks %}
 
-        {% for task in tasks %}
+            <tr>
+                <td> {{ task.id }} </td>
+                <td> {{ task.date.date() }} </td>
+                <td> {{ task.issue }} </td>
+                <td> {{ task.username }} </td>
+                <td> {{ task.spent }} </td>
+                <td> {{ task.burnt }} </td>
+                <td> {{ task.description }} </td>
 
-        <tr>
-            <td> {{ task.date }} </td>
-            <td> {{ task.issue }} </td>
-            <td> {{ task.username }} </td>
-            <td> {{ task.spent }} </td>
-            <td> {{ task.burnt }} </td>
-            <td> {{ task.description }} </td>
-
-            <td><a href="/delete/{{ task.id }}">Delete</a>&nbsp;<a href="/update/{{ task.id }}">Update</a>
-            </td>
-        </tr>
+                <td><a href="/delete/{{ task.id }}">Delete</a>&nbsp;<a href="/update/{{ task.id }}">Update</a>
+                </td>
+            </tr>
 
         {% endfor %}
 
